@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         registryCredential = 'ecr:ap-south-1:awscreds'
-        appRegistry = "575108947352.dkr.ecr.ap-south-1.amazonaws.com/gitops/gitops"
+        appRegistry = "575108947352.dkr.ecr.ap-south-1.amazonaws.com/gitops"
         vprofileRegistry = "https://575108947352.dkr.ecr.ap-south-1.amazonaws.com/gitops"
         cluster = "gitops"
         service = "gitopssvc"
