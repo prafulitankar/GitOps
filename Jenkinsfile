@@ -50,7 +50,7 @@ pipeline {
           steps {
        
             script {
-                dockerImage = docker.build( appRegistry + ":$BUILD_NUMBER", "./Docker-files/app/multistage/")
+                dockerImage = docker.build( appRegistry + ":$BUILD_NUMBER:latest", "./Docker-files/app/multistage/")
                 }
           }
     
@@ -60,8 +60,8 @@ pipeline {
           steps{
             script {
               docker.withRegistry( vprofileRegistry, registryCredential ) {
-                /*dockerImage.push("$BUILD_NUMBER")*/
-                dockerImage.push('latest')
+                dockerImage.push("$BUILD_NUMBER:latest")
+                /*dockerImage.push('latest')*/
               }
             }
           }
