@@ -1,4 +1,3 @@
-#Following Plugins Must be Installed on Jenkins Server.
 Docker
 Docker Pipeline 
 CloudBees Docker Build and Publish
