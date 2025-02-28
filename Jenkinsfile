@@ -15,7 +15,7 @@ pipeline {
    
         stage('Fetch code') {
             steps {
-               git branch: 'docker', url: 'https://github.com/prafulitankar/GitOps.git'
+               git branch: 'docker', url: 'https://github.com/hkhcoder/vprofile-project.git'
             }
 
         }
