@@ -9,7 +9,9 @@ pipeline {
     environment {
         registryCredential = 'ecr:ap-south-1:awscreds'
         appRegistry = "575108947352.dkr.ecr.ap-south-1.amazonaws.com/gitops"
-        vprofileRegistry = "https://575108947352.dkr.ecr.ap-south-1.amazonaws.com/gitops"      
+        vprofileRegistry = "https://575108947352.dkr.ecr.ap-south-1.amazonaws.com/gitops"
+        cluster = "gitopscluster"
+        service = "gitopssvc"
     }
   stages {
    
@@ -72,6 +74,12 @@ pipeline {
                 sh 'docker rmi -f $(docker images -a -q)'
             }
         }
-
+        stage('Deploy to ecs') {
+          steps {
+            withAWS(credentials: 'awscreds', region: 'ap-south-1') {
+            sh 'aws ecs update-service --cluster ${cluster} --service ${service} --force-new-deployment'
+            }
+          }
+        }
   }
 }
