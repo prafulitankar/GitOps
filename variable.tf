@@ -1,7 +1,7 @@
 variable "aws_region" {
   description = "AWS Region"
   type        = string
-  default     = "ap-south-1"
+  default     = "us-east-2"
 }
 
 variable "repository_name" {
