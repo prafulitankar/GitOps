@@ -1,13 +1,13 @@
 # ec2-instance.tf
 
 resource "aws_instance" "jenkins" {
-  ami           = var.ami # Update this as per your region Note: This AMI is Should be use in ap-south-1 region only 
+  ami           = var.ami # Update this as per your region Note: This AMI is Should be use in ap-south-1 region only
   instance_type = var.instance_type
   subnet_id     = var.subnet_id  # Use the public subnet ID here
   vpc_security_group_ids = [aws_security_group.jenkins_sg.id]  # Use the security group ID here
   key_name        = "source"
   user_data = <<-EOF
-              #!/bin/bash    
+              #!/bin/bash
               sudo apt update
               sudo apt install openjdk-17-jdk -y
               sudo apt install maven wget unzip -y
@@ -25,4 +25,3 @@ resource "aws_instance" "jenkins" {
     Name = "Jenkins-Server"
   }
 }
-
