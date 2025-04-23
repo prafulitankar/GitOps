@@ -1,9 +1,9 @@
 # ec2-instance.tf
 
 resource "aws_instance" "jenkins" {
-  ami           = "ami-023a307f3d27ea427" # Update this as per your region Note: This AMI is Should be use in ap-south-1 region only 
-  instance_type = "t3.medium"
-  subnet_id     = "subnet-062439f84ab327427"  # Use the public subnet ID here
+  ami           = var.ami # Update this as per your region Note: This AMI is Should be use in ap-south-1 region only 
+  instance_type = var.instance_type
+  subnet_id     = var.subnet_id  # Use the public subnet ID here
   vpc_security_group_ids = [aws_security_group.jenkins_sg.id]  # Use the security group ID here
   key_name        = "source"
   user_data = <<-EOF
