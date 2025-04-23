@@ -4,11 +4,6 @@ variable "aws_region" {
   default     = "ap-south-1"
 }
 
-variable "repository_name" {
-  description = "ECR repository name"
-  type        = string
-}
-
 variable "ami" {
   description = "EC2 AMI ID"
   type = string
