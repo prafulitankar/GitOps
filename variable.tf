@@ -9,20 +9,6 @@ variable "repository_name" {
   type        = string
 }
 
-variable "ami" {
-  description = "EC2 AMI ID"
-  type = string
-}
-
-variable "instance_type" {
-  description = "EC2 Instance Type"
-  type = string
-}
-
-variable "subnet_id" {
-  description = "EC2 Subnet Id"
-  type = string
-}
 
 
 
