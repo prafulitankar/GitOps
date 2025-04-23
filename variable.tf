@@ -4,9 +4,8 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
-variable "repository_name" {
-  description = "ECR repository name"
-  type        = string
+variable "ecs_cluster_name" {
+  default = "my-ecs-cluster"
 }
 
 
