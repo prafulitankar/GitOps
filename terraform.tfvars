@@ -1,1 +1,1 @@
-repository_name = "praful-1"
+ecs_cluster_name = "demo-ecs-cluster"
