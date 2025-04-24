@@ -7,3 +7,4 @@ subnet_ids     = [
   "subnet-0ae60365c2deaeada",
   "subnet-0d1e23c3cb6aa67ef"
 ]
+vpc_id = "vpc-03b717c8a7229a040"
