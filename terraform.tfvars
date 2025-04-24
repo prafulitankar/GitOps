@@ -1,5 +1,5 @@
 ecs_cluster_name = "demo-ecs-cluster"
-subnet_id     = [
+subnet_ids     = [
   "subnet-08997e0d837bafb1e",
   "subnet-047cd4054c2c7d118",
   "subnet-06cf29c90980923ba",
