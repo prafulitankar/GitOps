@@ -84,7 +84,7 @@ resource "aws_lb" "app_alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.ecs_sg.id]
-  subnets            = var.subnet_id
+  subnets            = var.subnet_ids
 
   tags = {
     Name = "app-lb"
@@ -130,7 +130,7 @@ resource "aws_ecs_service" "app_service" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets         = var.subnet_id
+    subnets         = var.subnet_ids
     security_groups = [aws_security_group.ecs_sg.id]
     assign_public_ip = true
   }
