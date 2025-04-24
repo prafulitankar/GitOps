@@ -7,9 +7,9 @@ resource "aws_ecs_cluster" "ecs_cluster" {
   name = var.ecs_cluster_name
 }
 
-# 3. IAM Role for ECS Task Execution
+# IAM Role for ECS Task Execution
 resource "aws_iam_role" "ecs_task_execution_role" {
-  name = "ecsTaskExecutionRole"
+  name = "ecsTaskExecutionRolenew"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -28,7 +28,7 @@ resource "aws_iam_role_policy_attachment" "ecs_execution_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-# 4. ECS Task Definition
+# ECS Task Definition
 resource "aws_ecs_task_definition" "test" {
   family                   = "test"
   requires_compatibilities = ["FARGATE"]
@@ -52,32 +52,21 @@ resource "aws_ecs_task_definition" "test" {
   ])
 }
 
-# 5. ECS Service
-resource "aws_ecs_service" "app_service" {
-  name            = "app-service"
-  cluster         = aws_ecs_cluster.ecs_cluster.id
-  launch_type     = "FARGATE"
-  desired_count   = 1
-  task_definition = aws_ecs_task_definition.test.arn
-
-  network_configuration {
-    subnets         = [aws_subnet.ecs_subnet.id]
-    assign_public_ip = true
-    security_groups = [aws_security_group.ecs_sg.id]
-  }
-
-  depends_on = [aws_iam_role_policy_attachment.ecs_execution_policy]
-}
-
-# 6. Security Group
+# Security Group
 resource "aws_security_group" "ecs_sg" {
   name        = "ecs-sg"
   description = "Allow HTTP"
-  vpc_id      = aws_vpc.ecs_vpc.id
-
+ 
   ingress {
     from_port   = 8013
     to_port     = 8013
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
