@@ -8,6 +8,11 @@ variable "ecs_cluster_name" {
   default = "my-ecs-cluster"
 }
 
+variable "subnet_id" {
+  description = "EC2 Subnet Id"
+  type = string
+}
+
 
 
 
