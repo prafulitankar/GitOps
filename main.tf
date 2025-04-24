@@ -28,7 +28,7 @@ resource "aws_iam_role_policy_attachment" "ecs_execution_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-# ECS Task Definition
+# ECS Task Definition For App
 resource "aws_ecs_task_definition" "test" {
   family                   = "test"
   requires_compatibilities = ["FARGATE"]
@@ -40,7 +40,7 @@ resource "aws_ecs_task_definition" "test" {
   container_definitions = jsonencode([
     {
       name      = "app"
-      image     = "114215073164.dkr.ecr.us-east-1.amazonaws.com/praful-1:latest"
+      image     = "114215073164.dkr.ecr.us-east-1.amazonaws.com/myapp:latest"
       essential = true
       portMappings = [
         {
@@ -52,6 +52,55 @@ resource "aws_ecs_task_definition" "test" {
   ])
 }
 
+# ECS Task Definition For DB
+resource "aws_ecs_task_definition" "app-db" {
+  family                   = "app-db"
+  requires_compatibilities = ["FARGATE"]
+  network_mode             = "awsvpc"
+  cpu                      = "256"
+  memory                   = "512"
+  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+
+  container_definitions = jsonencode([
+    {
+      name      = "app"
+      image     = "114215073164.dkr.ecr.us-east-1.amazonaws.com/myapp-db:latest"
+      essential = true
+      portMappings = [
+        {
+          containerPort = 3306
+          hostPort      = 3306
+        }
+      ]
+    }
+  ])
+}
+
+# ECS Task Definition For Web
+resource "aws_ecs_task_definition" "app-web" {
+  family                   = "app-web"
+  requires_compatibilities = ["FARGATE"]
+  network_mode             = "awsvpc"
+  cpu                      = "256"
+  memory                   = "512"
+  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+
+  container_definitions = jsonencode([
+    {
+      name      = "app"
+      image     = "114215073164.dkr.ecr.us-east-1.amazonaws.com/myapp-web:latest"
+      essential = true
+      portMappings = [
+        {
+          containerPort = 80
+          hostPort      = 80
+        }
+      ]
+    }
+  ])
+}
+
+
 # Security Group
 resource "aws_security_group" "ecs_sg" {
   name        = "ecs-sg"
@@ -60,6 +109,13 @@ resource "aws_security_group" "ecs_sg" {
   ingress {
     from_port   = 8080
     to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 3306
+    to_port     = 3306
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -78,7 +134,7 @@ resource "aws_security_group" "ecs_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-# ALB and TG
+# ALB and TG For App Service
 resource "aws_lb" "app_alb" {
   name               = "app-lb"
   internal           = false
@@ -123,7 +179,7 @@ resource "aws_lb_listener" "app_listener" {
   }
 }
 
-#Attach ALB to ECS Service
+#Launch ECS App Service and Attach ALB to App ECS Service
 resource "aws_ecs_service" "app_service" {
   name            = "app-service"
   cluster         = aws_ecs_cluster.ecs_cluster.id
@@ -147,5 +203,37 @@ resource "aws_ecs_service" "app_service" {
   depends_on = [aws_lb_listener.app_listener]
 }
 
+# Launch DB ECS Service
+resource "aws_ecs_service" "db_service" {
+  name            = "db-service"
+  cluster         = aws_ecs_cluster.ecs_cluster.id
+  task_definition = aws_ecs_task_definition.app-db.arn
+  launch_type     = "FARGATE"
+  desired_count = 2
 
+  network_configuration {
+    subnets         = var.subnet_ids
+    security_groups = [aws_security_group.ecs_sg.id]
+    assign_public_ip = true
+  }
+
+  depends_on = [aws_ecs_task_definition.app-db]
+}
+
+# Launch Web ECS Service
+resource "aws_ecs_service" "web_service" {
+  name            = "web-service"
+  cluster         = aws_ecs_cluster.ecs_cluster.id
+  task_definition = aws_ecs_task_definition.app-web.arn
+  launch_type     = "FARGATE"
+  desired_count = 2
+
+  network_configuration {
+    subnets         = var.subnet_ids
+    security_groups = [aws_security_group.ecs_sg.id]
+    assign_public_ip = true
+  }
+
+  depends_on = [aws_ecs_task_definition.app-web]
+}
 
