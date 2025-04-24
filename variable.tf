@@ -9,9 +9,15 @@ variable "ecs_cluster_name" {
 }
 
 variable "subnet_ids" {
-  description = "EC2 Subnet Id"
+  description = "Subnet Lists for Containers"
   type = list(string)
 }
+
+variable "vpc_id" {
+  description = "VPC Id for Networking"
+  type = string
+}
+
 
 
 
