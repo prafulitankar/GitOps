@@ -10,7 +10,7 @@ variable "ecs_cluster_name" {
 
 variable "subnet_ids" {
   description = "EC2 Subnet Id"
-  type = string
+  type = list(string)
 }
 
 
