@@ -45,7 +45,7 @@ resource "aws_ecs_task_definition" "test" {
       portMappings = [
         {
           containerPort = 8080
-          hostPort      = 8013
+          hostPort      = 8080
         }
       ]
     }
@@ -58,8 +58,8 @@ resource "aws_security_group" "ecs_sg" {
   description = "Allow HTTP"
  
   ingress {
-    from_port   = 8013
-    to_port     = 8013
+    from_port   = 8080
+    to_port     = 8080
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
