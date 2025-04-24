@@ -30,7 +30,8 @@ sql dump file:
   
     AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID') : Add in Jenkins Credentials with Kind Secret text
     AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY') : Add in Jenkins Credentials with Kind Secret text
-    Above variables used to authnticate AWS Account from Jenkins Pipeline to Deploy ECR using Terraform
+
+  Above variables used to authnticate AWS Account from Jenkins Pipeline to Deploy ECR using Terraform
   
 ### For App Deployment Pipeline
 registryCredential = 'ecr:ap-south-1:awscreds' 
