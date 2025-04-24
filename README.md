@@ -22,4 +22,10 @@ sql dump file:
 - db_backup.sql file is a mysql dump file.we have to import this dump to mysql db server
 - > mysql -u <user_name> -p accounts < db_backup.sql
 
+# Pipeline Prequisite : 
+registryCredential = 'ecr:ap-south-1:awscreds' 
+ - Create an IAM user having following Permissions.
+   ![image](https://github.com/user-attachments/assets/05ea5503-0450-4417-ad56-90bbaa051008)
+
+
 
