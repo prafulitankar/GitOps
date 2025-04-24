@@ -27,6 +27,7 @@ sql dump file:
 - Docker should be Install on Jenkins Server , Jenkins user should be a part of Docker Group and restart the Jenkins Service.
 - Terraform should be Install on Jenkins Server.
 - Git Should be Install On Jenkins Server.
+  
     AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID') : Add in Jenkins Credentials with Kind Secret text
     AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY') : Add in Jenkins Credentials with Kind Secret text
     Above variables used to authnticate AWS Account from Jenkins Pipeline to Deploy ECR using Terraform
