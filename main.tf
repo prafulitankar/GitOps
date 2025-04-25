@@ -40,7 +40,7 @@ resource "aws_ecs_task_definition" "app" {
   container_definitions = jsonencode([
     {
       name      = "app"
-      image     = "114215073164.dkr.ecr.us-east-1.amazonaws.com/myapp:latest"
+      image     = "114215073164.dkr.ecr.us-east-1.amazonaws.com/gitops:latest"
       essential = true
       portMappings = [
         {
@@ -52,7 +52,7 @@ resource "aws_ecs_task_definition" "app" {
   ])
 }
 
-# ECS Task Definition For DB
+/*# ECS Task Definition For DB
 resource "aws_ecs_task_definition" "app-db" {
   family                   = "app-db"
   requires_compatibilities = ["FARGATE"]
@@ -98,7 +98,7 @@ resource "aws_ecs_task_definition" "app-web" {
       ]
     }
   ])
-}
+}*/
 
 
 # Security Group
@@ -203,7 +203,7 @@ resource "aws_ecs_service" "app_service" {
   depends_on = [aws_lb_listener.app_listener]
 }
 
-# Launch DB ECS Service
+/*# Launch DB ECS Service
 resource "aws_ecs_service" "db_service" {
   name            = "db-service"
   cluster         = aws_ecs_cluster.ecs_cluster.id
@@ -235,5 +235,5 @@ resource "aws_ecs_service" "web_service" {
   }
 
   depends_on = [aws_ecs_task_definition.app-web]
-}
+}*/
 
