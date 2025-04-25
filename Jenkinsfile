@@ -16,7 +16,7 @@ pipeline {
       }
     }
 
-    /*stage('Terraform Init') {
+    stage('Terraform Init') {
       steps {
         sh 'terraform init'
       }
@@ -39,7 +39,7 @@ pipeline {
         //input message: 'Apply Terraform changes?', ok: 'Apply'
         sh 'terraform apply -auto-approve tfplan'
       }
-    }*/
+    }
   }
 
   post {
