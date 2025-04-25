@@ -1,8 +1,8 @@
-//repository_name = "praful-1"
+repository_name = "gitops"
 
-ecr_repositories = [
+/*ecr_repositories = [
   "myapp",
   "myapp-db",
   "myapp-web"
-]
+]*/
 
