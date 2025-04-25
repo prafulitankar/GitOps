@@ -29,7 +29,7 @@ resource "aws_iam_role_policy_attachment" "ecs_execution_policy" {
 }
 
 # ECS Task Definition For App
-resource "aws_ecs_task_definition" "test" {
+resource "aws_ecs_task_definition" "app" {
   family                   = "test"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
@@ -63,7 +63,7 @@ resource "aws_ecs_task_definition" "app-db" {
 
   container_definitions = jsonencode([
     {
-      name      = "app"
+      name      = "app-db"
       image     = "114215073164.dkr.ecr.us-east-1.amazonaws.com/myapp-db:latest"
       essential = true
       portMappings = [
@@ -87,7 +87,7 @@ resource "aws_ecs_task_definition" "app-web" {
 
   container_definitions = jsonencode([
     {
-      name      = "app"
+      name      = "app-web"
       image     = "114215073164.dkr.ecr.us-east-1.amazonaws.com/myapp-web:latest"
       essential = true
       portMappings = [
@@ -183,7 +183,7 @@ resource "aws_lb_listener" "app_listener" {
 resource "aws_ecs_service" "app_service" {
   name            = "app-service"
   cluster         = aws_ecs_cluster.ecs_cluster.id
-  task_definition = aws_ecs_task_definition.test.arn
+  task_definition = aws_ecs_task_definition.app.arn
   launch_type     = "FARGATE"
 
   network_configuration {
