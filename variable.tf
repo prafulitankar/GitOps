@@ -5,16 +5,16 @@ variable "aws_region" {
 }
 
 #Variable for Single Repository
-//variable "repository_name" {
-  //description = "ECR repository name"
-  //type        = string
-//}
+variable "repository_name" {
+  description = "ECR repository name"
+  type        = string
+}
 
-variable "ecr_repositories" {
+/*variable "ecr_repositories" {
   description = "List of ECR repository names to create"
   type        = list(string)
   //default     = ["app-frontend", "app-backend", "worker-service"]
-}
+}*/
 
 
 
