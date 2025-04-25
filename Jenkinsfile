@@ -12,10 +12,11 @@ pipeline {
     stage('Checkout') {
       steps {
         git branch : 'ecs' , url: 'https://github.com/prafulitankar/GitOps.git'
+        echo 'Access_Key Is : $AWS_ACCESS_KEY_ID'
       }
     }
 
-    stage('Terraform Init') {
+    /*stage('Terraform Init') {
       steps {
         sh 'terraform init'
       }
@@ -38,7 +39,7 @@ pipeline {
         //input message: 'Apply Terraform changes?', ok: 'Apply'
         sh 'terraform apply -auto-approve tfplan'
       }
-    }
+    }*/
   }
 
   post {
